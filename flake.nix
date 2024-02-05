@@ -34,9 +34,17 @@
         disko.follows = "disko";
       };
     };
+
+    nixgl = {
+      url = "github:nix-community/nixGL";
+    };
+
+    hyprland = {
+      url = "github:hyprwm/Hyprland";
+    };
   };
 
-  outputs = { nix-darwin, home-manager, nix-index-database, nixpkgs, ... }: {
+  outputs = { nix-darwin, home-manager, nix-index-database, nixpkgs, nixgl, hyprland, ... }: {
     darwinConfigurations."mac_arm64" = nix-darwin.lib.darwinSystem {
       modules = [
         nix-index-database.darwinModules.nix-index
@@ -57,8 +65,10 @@
         pkgs = import nixpkgs {
           system = "x86_64-linux";
           config.allowUnfree = true;
+          overlays = [ nixgl.overlay ];
         };
         modules = [
+          hyprland.homeManagerModules.default
           nix-index-database.hmModules.nix-index
           ./home/default.nix
           {

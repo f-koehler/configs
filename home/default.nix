@@ -1,4 +1,4 @@
-{ config, pkgs, lib, ... }:
+{ config, pkgs, lib, nixgl, ... }:
 
 {
   imports = [
@@ -8,6 +8,7 @@
     ./fish.nix
     ./git.nix
     ./gpg.nix
+    ./hyprland.nix
     ./ssh.nix
     ./starship.nix
     ./tmux.nix
@@ -18,7 +19,11 @@
 
   nix = if pkgs.stdenv.isDarwin then { } else {
     package = pkgs.nix;
-    settings.experimental-features = [ "nix-command" "flakes" ];
+    settings = {
+      experimental-features = [ "nix-command" "flakes" ];
+      # substituters = [ "https://hyprland.cachix.org" ];
+      # trusted-public-keys = [ "hyprland.cachix.org-1:a7pgxzMz7+chwVL3/pzj6jIBMioiJM7ypFP8PwtkuGc=" ];
+    };
   };
   fonts.fontconfig.enable = true;
   home = {
