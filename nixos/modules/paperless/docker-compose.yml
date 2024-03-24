@@ -1,7 +1,7 @@
 version: "3.8"
 services:
   gotenberg:
-    image: "docker.io/gotenberg/gotenberg:8.2.2"
+    image: "docker.io/gotenberg/gotenberg:8.3.0"
     restart: unless-stopped
     environment:
       CHROMIUM_DISABLE_ROUTES: 1
